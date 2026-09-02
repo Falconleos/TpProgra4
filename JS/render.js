@@ -1,5 +1,7 @@
 (()=>{
-    for(let book of bookList){
+    const list = bookList();
+
+    for(let book of list){
         const card = document.createElement('div');
         card.classList.add('card');
 
