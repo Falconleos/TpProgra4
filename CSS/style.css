@@ -16,6 +16,7 @@ body{
         "aside main"
         "footer footer"
     ;
+    overflow: hidden;
 }
 
 nav{
@@ -105,6 +106,6 @@ footer{
     color: #fff;
     width: 200px;
     font-size: 1em;
-    max-height: 200px;
+    height: 200px;
     overflow-y: auto;
 }
