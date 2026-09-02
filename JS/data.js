@@ -1,5 +1,4 @@
-const bookList = ()=>{
-    return [
+export const bookList = [
         {
             id: 1,
             name: 'Martín Fierro',
@@ -50,4 +49,3 @@ const bookList = ()=>{
             year: '1943'
         }
     ];
-}

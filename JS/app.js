@@ -1,4 +1,5 @@
-const mainObject = document.querySelector('main');
+export const mainObject = document.querySelector('main');
+
 const btnAdd = document.querySelector('.bookAdd form button');
     const inTitle = document.querySelector('#title');   
     const inAuthor = document.querySelector('#author');   

@@ -1,7 +1,8 @@
-(()=>{
-    const list = bookList();
+import { bookList } from './data.js';
+import { mainObject } from './app.js';
 
-    for(let book of list){
+
+    for(let book of bookList){
         const card = document.createElement('div');
         card.classList.add('card');
 
@@ -14,5 +15,5 @@
 
         mainObject.appendChild(card);
     }
-})();
+
 
