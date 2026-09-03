@@ -1,51 +1,11 @@
+import { Book } from "../model/book.js";
+
 export const bookList = [
-        {
-            id: 1,
-            name: 'Martín Fierro',
-            author: 'José Hernandez',
-            genre: 'novela',
-            year: '1872'
-        },
-        {
-            id: 2,
-            name: 'Don Quijote de la Mancha',
-            author: 'Miguel de Cervantes',
-            genre: 'novela',
-            year: '1605'
-        },
-        {
-            id: 3,
-            name: 'Cien años de soledad',
-            author: 'Gabriel García Márquez',
-            genre: 'novela',
-            year: '1967'
-        },
-        {
-            id: 4,
-            name: 'Rayuela',
-            author: 'Julio Cortázar',
-            genre: 'novela',
-            year: '1963'
-        },
-        {
-            id: 5,
-            name: 'Ficciones',
-            author: 'Jorge Luis Borges',
-            genre: 'cuentos',
-            year: '1944'
-        },
-        {
-            id: 6,
-            name: 'La metamorfosis',
-            author: 'Franz Kafka',
-            genre: 'novela corta',
-            year: '1915'
-        },
-        {
-            id: 7,
-            name: 'El Principito',
-            author: 'Antoine de Saint-Exupéry',
-            genre: 'fábula',
-            year: '1943'
-        }
+        new Book('Martín Fierro','José Hernandez','novela','1872'),
+        new Book('Don Quijote de la Mancha','Miguel de Cervantes','novela','1605'),
+        new Book('Cien años de soledad','Gabriel García Márquez','novela','1967'),
+        new Book('Rayuela','Julio Cortázar','novela','1963'),
+        new Book('Ficciones','Jorge Luis Borges','cuentos','1944'),
+        new Book('La metamorfosis','Franz Kafka','novela corta','1915'),
+        new Book('El Principito','Antoine de Saint-Exupéry','fábula','1943')
     ];

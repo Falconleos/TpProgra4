@@ -108,4 +108,35 @@ footer{
     font-size: 1em;
     height: 200px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.botonera{
+    display: flex;
+    gap: 10px;
+}
+
+.botonera button{
+    width: 100%;
+}
+
+.modal{
+    display: none;
+    width: 400px;
+    background-color: #FF1E00;
+    box-shadow: 0 0 50px black;
+
+    position:absolute;
+    margin-left: 35%;
+    margin-top: 10%;
+}
+
+.modal form{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
 }

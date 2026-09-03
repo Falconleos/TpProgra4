@@ -15,25 +15,49 @@
     <nav>
         <h2>Smart Library 1.0</h2>
     </nav>
+
+    <section class="modal">
+        <form>
+                <h2>Editar Libro</h2>
+                <div class="entrada">
+                    <label>Titulo</label>
+                    <input type="text" placeholder="Escriba el título" id="modal-title" required>
+                </div>
+                <div class="entrada">
+                    <label>Autor</label>
+                    <input type="text" placeholder="Escriba el título" id="modal-author" required>
+                </div>
+                <div class="entrada">
+                    <label>Género</label>
+                    <input type="text" placeholder="Escriba el título" id="modal-genre" required>
+                </div>
+                <div class="entrada">
+                    <label>Año</label>
+                    <input type="text" placeholder="Escriba el título" id="modal-year" required>
+                </div>
+                <button type="submit" class="btnSubmit btnSubmitModal">Editar</button>
+            </form>
+    </section>
+
     <aside>
         <div class="bookAdd">
             <form>
                 <h2>Agregar Libro</h2>
                 <div class="entrada">
                     <label>Titulo</label>
-                    <input type="text" placeholder="Escriba el título" id="title">
+                    <input type="text" placeholder="Escriba el título" id="title" required>
                 </div>
                 <div class="entrada">
                     <label>Autor</label>
-                    <input type="text" placeholder="Escriba el título" id="author>
+                    <input type="text" placeholder="Escriba el título" id="author" required>
                 </div>
                 <div class="entrada">
                     <label>Género</label>
-                    <input type="text" placeholder="Escriba el título" id="genre">
+                    <input type="text" placeholder="Escriba el título" id="genre" required>
                 </div>
                 <div class="entrada">
                     <label>Año</label>
-                    <input type="text" placeholder="Escriba el título" id="year">
+                    <input type="text" placeholder="Escriba el título" id="year" required>
                 </div>
                 <button type="submit" class="btnSubmit">Agregar</button>
             </form>
@@ -44,6 +68,7 @@
 
     <footer></footer>
 
+    <script src="model/book.js" type="module"></script>
     <script src="JS/app.js" type="module"></script>
     <script src="JS/data.js" type="module"></script>    
     <script src="JS/render.js" type="module"></script>  
