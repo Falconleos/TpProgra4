@@ -160,3 +160,6 @@ filter.addEventListener('input', () => {
     crearCards(bookListFiltered);
 });
 
+selectFilter.addEventListener('change', () => {
+    filter.dispatchEvent(new Event('input'));
+});
