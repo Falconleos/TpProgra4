@@ -8,8 +8,43 @@
 </head>
 <body>
 
-    <nav></nav>
-    <aside></aside>
+    <nav><h1>SmartLibrary 1.0</h1></nav>
+    <div class="filterBar">
+        <h3>Filtrar:</h3>
+        <select id="filter-select">
+            <option value="titleSelect">Titulo</option>
+            <option value="authorSelect">Autor</option>
+            <option value="genreSelect">Genero</option>
+            <option value="yearSelect">Año</option>
+        </select>
+        <input type="text" placeholder="Filtrar..." id="inputFilter">
+    </div>
+    <aside>
+        <form class="addMenu">
+            <div class="addEntries">
+                <h3>Nuevo libro</h3>
+                 <div class="addEntry">
+                    <label>Titulo</label>
+                    <input type="text" placeholder="Escriba el título" id="addTitle" required>
+                </div>
+                <div class="addEntry">
+                    <label>Autor</label>
+                    <input type="text" placeholder="Escriba el autor" id="addAuthor" required>
+                </div>
+                <div class="addEntry">
+                    <label>Genero</label>
+                    <input type="text" placeholder="Escriba el género" id="addGenre" required>
+                </div>
+                <div class="addEntry">
+                    <label>Year</label>
+                    <input type="text" placeholder="Escriba el año" id="addYear" required>
+                </div>
+            </div>
+            <div class="addbtn">
+                <button type="submit" id="btnAdd">Agregar</button>
+            </div>
+        </form>
+    </aside>
     <main></main>
     <footer></footer>
 
