@@ -131,3 +131,10 @@ button:active{
 .btn-options button{
     width: 100%;
 }
+
+footer{
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

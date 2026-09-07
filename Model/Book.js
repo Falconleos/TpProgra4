@@ -1,4 +1,4 @@
-export class Book{
+export class Book {
     static counter = 0;
 
     #id;
@@ -6,45 +6,53 @@ export class Book{
     #author;
     #genre;
     #year;
+    #isFavorite; 
 
-    constructor(title,author,genre,year){
+    constructor(title, author, genre, year, isFavorite = false) {
         this.#id = Book.counter++;
         this.#title = title;
         this.#author = author;
         this.#genre = genre;
-        this.#year = year
+        this.#year = year;
+        this.#isFavorite = isFavorite;
     }
 
-    getId=()=>{
+    getId = () => {
         return this.#id;
     }
-    getTitle = ()=>{
+    getTitle = () => {
         return this.#title;
     }
-    getAuthor=()=>{
+    getAuthor = () => {
         return this.#author;
     }
-    getGenre=()=>{
+    getGenre = () => {
         return this.#genre;
     }
-    getYear=()=>{
+    getYear = () => {
         return this.#year;
     }
+    getIsFavorite = () => {
+        return this.#isFavorite;
+    }
 
-    setTitle=(title)=>{
+    setTitle = (title) => {
         this.#title = title;
     }
-    setAuthor = (author)=>{
+    setAuthor = (author) => {
         this.#author = author;
     }
-    setGenre=(genre)=>{
+    setGenre = (genre) => {
         this.#genre = genre;
     }
-    setYear=(year)=>{
+    setYear = (year) => {
         this.#year = year;
     }
+    setIsFavorite = (isFavorite) => {
+        this.#isFavorite = Boolean(isFavorite);
+    }
 
-    #imprimir(){
-        console.log(`Libro: ${this.#id}\nTitle: ${this.#title}\nAuthor: ${this.#author}\nGenre: ${this.#genre}\nYear: ${this.#year}\n==================================================`);
+    #imprimir() {
+        console.log(`Libro: ${this.#id}\nTitle: ${this.#title}\nAuthor: ${this.#author}\nGenre: ${this.#genre}\nYear: ${this.#year}\nFavorite: ${this.#isFavorite}\n==================================================`);
     }
 }

@@ -33,11 +33,25 @@ export const crearCards = (lista = bookList) => {
                 <h3>Autor: ${book.getAuthor()}</h3> 
                 <p>genre: ${book.getGenre()}</p>
                 <p>year: ${book.getYear()}</p>
+                <label class="fav-label">
+                    <input type="checkbox" id="chk-fav${book.getId()}" ${book.getIsFavorite() ? 'checked' : ''}>
+                    Favorito
+                </label>
             </div>
             <div class="btn-options">
                 <button id="btn-edit${book.getId()}">Editar</button>
                 <button id="btn-eliminar${book.getId()}">Eliminar</button>
             </div>`;
+
+        // Evento para cambiar el estado de favorito
+        const chkFav = nuevoDiv.querySelector(`#chk-fav${book.getId()}`);
+        chkFav.addEventListener('change', (e) => {
+            book.setIsFavorite(e.target.checked);
+
+            if (selectFilter.value === 'favoriteSelect') {
+                filter.dispatchEvent(new Event('input'));
+            }
+        });
 
         const btnEditar = nuevoDiv.querySelector(`#btn-edit${book.getId()}`);
         btnEditar.addEventListener('click', () => {
@@ -80,12 +94,24 @@ btnConfirmar.addEventListener('click', () => {
         <h3>Autor: ${activeBook.getAuthor()}</h3>
         <p>genre: ${activeBook.getGenre()}</p>
         <p>year: ${activeBook.getYear()}</p>
+        <label class="fav-label">
+            <input type="checkbox" id="chk-fav${activeBook.getId()}" ${activeBook.getIsFavorite() ? 'checked' : ''}>
+            Favorito
+        </label>
     `;
+
+    const chkFav = activeCardDiv.querySelector(`#chk-fav${activeBook.getId()}`);
+    chkFav.addEventListener('change', (e) => {
+        activeBook.setIsFavorite(e.target.checked);
+        if (selectFilter.value === 'favoriteSelect') {
+            filter.dispatchEvent(new Event('input'));
+        }
+    });
+
     editModal.style.display = 'none';
     activeBook = null;
     activeCardDiv = null;
 });
-
 
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -112,8 +138,17 @@ filter.addEventListener('input', () => {
     const criterio = selectFilter.value;
 
     const bookListFiltered = bookList.filter((book) => {
-        let valorCampo = '';
+        if (criterio === 'favoriteSelect') {
+            const esFavorito = book.getIsFavorite();
+            if (query !== '') {
+                const coincideTexto = book.getTitle().toLowerCase().includes(query) || 
+                                     book.getAuthor().toLowerCase().includes(query);
+                return esFavorito && coincideTexto;
+            }
+            return esFavorito;
+        }
 
+        let valorCampo = '';
         if (criterio === 'titleSelect') valorCampo = book.getTitle();
         else if (criterio === 'authorSelect') valorCampo = book.getAuthor();
         else if (criterio === 'genreSelect') valorCampo = book.getGenre();
@@ -125,7 +160,3 @@ filter.addEventListener('input', () => {
     crearCards(bookListFiltered);
 });
 
-
-selectFilter.addEventListener('change', () => {
-    filter.dispatchEvent(new Event('input'));
-});
