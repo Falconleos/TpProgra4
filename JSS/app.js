@@ -155,22 +155,28 @@ btnConfirmar.addEventListener('click', () => {
 addForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    if (addForm.checkValidity()) {
-        const newBook = new Book(
-            inputNewTitle.value.trim(),
-            inputNewAuthor.value.trim(),
-            inputNewGenre.value.trim(),
-            Number(inputNewYear.value.trim())
-        );
+    const title = inputNewTitle.value.trim();
+    const author = inputNewAuthor.value.trim();
+    const genre = inputNewGenre.value.trim();
+    const yearStr = inputNewYear.value.trim();
 
-        bookList.push(newBook);
-        addForm.reset();
-        
-        filter.dispatchEvent(new Event('input'));
-        dashboardCount.textContent = bookList.length;
-    } else {
-        addForm.reportValidity();
+    if (title === '' || author === '' || genre === '' || yearStr === '') {
+        alert('Por favor, complete todos los campos para agregar el libro.');
+        return;
     }
+
+    const newBook = new Book(
+        title,
+        author,
+        genre,
+        Number(yearStr)
+    );
+
+    bookList.push(newBook);
+    addForm.reset();
+    
+    filter.dispatchEvent(new Event('input'));
+    dashboardCount.textContent = bookList.length;
 });
 
 filter.addEventListener('input', () => {
