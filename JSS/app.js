@@ -109,10 +109,20 @@ export const crearCards = (lista = bookList) => {
 btnConfirmar.addEventListener('click', () => {
     if (!activeBook) return;
 
-    activeBook.setTitle(titleEditInput.value);
-    activeBook.setAuthor(authorEditInput.value);
-    activeBook.setGenre(genreEditInput.value);
-    activeBook.setYear(Number(yearEditInput.value));
+    const title = titleEditInput.value.trim();
+    const author = authorEditInput.value.trim();
+    const genre = genreEditInput.value.trim();
+    const year = yearEditInput.value.trim();
+
+    if (title==='' || author==='' || genre==='' || year==='') {
+        alert('Por favor, complete todos los campos.');
+        return;
+    }
+
+    activeBook.setTitle(title);
+    activeBook.setAuthor(author);
+    activeBook.setGenre(genre);
+    activeBook.setYear(Number(year));
 
     activeCardDiv.querySelector('.card-info').innerHTML = `
         <h2>${activeBook.getTitle()}</h2>
