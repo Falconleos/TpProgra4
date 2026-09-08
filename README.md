@@ -19,6 +19,8 @@ Aplicación web desarrollada para la gestión eficiente de un catálogo de libro
 * **Panel de Control (Dashboard):** Métricas actualizadas en tiempo real que reflejan el total de libros almacenados y el total de elementos mostrados tras aplicar filtros.
 ## Funcionalidad Extra / Valor Agregado
 * **Modal de Edición Interactiva:** Como mejora adicional más allá de los requerimientos mínimos, se implementó una ventana flotante (modal) dinámica para la edición en tiempo real de los datos de cada libro (`title`, `author`, `genre`, `year`). Esto permite modificar la información de manera fluida y limpia, actualizando automáticamente la tarjeta correspondiente en la interfaz sin necesidad de recargar la página ni perder el estado actual de los filtros.
+### Uso de `dispatchEvent` (Investigación propia)
+Investigué por mi cuenta cómo usar `dispatchEvent` para simular eventos desde el código. Lo usé porque cuando marcaba un libro como favorito o prestado con un filtro activo, la pantalla no se actualizaba sola. Con `filter.dispatchEvent(new Event('input'))` logro que el buscador se ejecute solo y me ahorré repetir código para refrescar las tarjetas.
 
 ## Tecnologías Utilizadas
 * **HTML5:** Marcado estructurado para formularios, menús de navegación, paneles y modales.
