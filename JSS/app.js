@@ -112,7 +112,7 @@ btnConfirmar.addEventListener('click', () => {
     activeBook.setTitle(titleEditInput.value);
     activeBook.setAuthor(authorEditInput.value);
     activeBook.setGenre(genreEditInput.value);
-    activeBook.setYear(yearEditInput.value);
+    activeBook.setYear(Number(yearEditInput.value));
 
     activeCardDiv.querySelector('.card-info').innerHTML = `
         <h2>${activeBook.getTitle()}</h2>
@@ -160,13 +160,14 @@ addForm.addEventListener('submit', (e) => {
             inputNewTitle.value.trim(),
             inputNewAuthor.value.trim(),
             inputNewGenre.value.trim(),
-            inputNewYear.value.trim()
+            Number(inputNewYear.value.trim())
         );
 
         bookList.push(newBook);
         addForm.reset();
         
         filter.dispatchEvent(new Event('input'));
+        dashboardCount.textContent = bookList.length;
     } else {
         addForm.reportValidity();
     }
