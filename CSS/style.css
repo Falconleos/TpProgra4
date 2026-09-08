@@ -138,3 +138,18 @@ footer{
     justify-content: center;
     align-items: center;
 }
+
+.dashboard {
+    padding: 10px;
+    margin: 20px;
+    background-color: #2d2d2d;
+    border-radius: 6px;
+    width: 70%;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

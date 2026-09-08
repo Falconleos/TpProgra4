@@ -17,6 +17,9 @@ const inputNewYear = document.querySelector('#addYear');
 const filter = document.querySelector('#inputFilter');
 const selectFilter = document.querySelector('#filter-select');
 
+let dashboardCount = document.querySelector('.dashboard h2');
+let shownBookCount = document.querySelector('.book-showed');
+
 let activeBook = null;
 let activeCardDiv = null;
 
@@ -33,10 +36,19 @@ export const crearCards = (lista = bookList) => {
                 <h3>Autor: ${book.getAuthor()}</h3> 
                 <p>genre: ${book.getGenre()}</p>
                 <p>year: ${book.getYear()}</p>
+
                 <label class="fav-label">
+                <!-- ternario para indicar si la card debe aparecer marcada o no como favorita -->
                     <input type="checkbox" id="chk-fav${book.getId()}" ${book.getIsFavorite() ? 'checked' : ''}>
                     Favorito
                 </label>
+                
+                <!-- ternario para indicar si la card debe aparecer marcada o no como prestada -->
+                <label class="fav-label">            
+                    <input type="checkbox" id="chk-borr${book.getId()}" ${book.getIsBorrowed() ? 'checked' : ''}>
+                    Prestado
+                </label>
+
             </div>
             <div class="btn-options">
                 <button id="btn-edit${book.getId()}">Editar</button>
@@ -49,6 +61,15 @@ export const crearCards = (lista = bookList) => {
             book.setIsFavorite(e.target.checked);
 
             if (selectFilter.value === 'favoriteSelect') {
+                filter.dispatchEvent(new Event('input'));
+            }
+        });
+        // Evento para cambiar el estado de prestado
+        const chkBorr = nuevoDiv.querySelector(`#chk-borr${book.getId()}`);
+        chkBorr.addEventListener('change', (e) => {
+            book.setIsBorrowed(e.target.checked);
+
+            if (selectFilter.value === 'borrowedSelect') {
                 filter.dispatchEvent(new Event('input'));
             }
         });
@@ -75,10 +96,14 @@ export const crearCards = (lista = bookList) => {
                 }
                 nuevoDiv.remove();
             }
+            shownBookCount.textContent = mainObject.children.length;
+            dashboardCount.textContent = bookList.length;
         });
 
         mainObject.appendChild(nuevoDiv);
     });
+
+    shownBookCount.textContent = mainObject.children.length;
 }; 
 
 btnConfirmar.addEventListener('click', () => {
@@ -94,9 +119,15 @@ btnConfirmar.addEventListener('click', () => {
         <h3>Autor: ${activeBook.getAuthor()}</h3>
         <p>genre: ${activeBook.getGenre()}</p>
         <p>year: ${activeBook.getYear()}</p>
+
         <label class="fav-label">
             <input type="checkbox" id="chk-fav${activeBook.getId()}" ${activeBook.getIsFavorite() ? 'checked' : ''}>
             Favorito
+        </label>
+
+        <label class="fav-label">            
+            <input type="checkbox" id="chk-borr${activeBook.getId()}" ${activeBook.getIsBorrowed() ? 'checked' : ''}>
+            Prestado
         </label>
     `;
 
@@ -104,6 +135,14 @@ btnConfirmar.addEventListener('click', () => {
     chkFav.addEventListener('change', (e) => {
         activeBook.setIsFavorite(e.target.checked);
         if (selectFilter.value === 'favoriteSelect') {
+            filter.dispatchEvent(new Event('input'));
+        }
+    });
+
+    const chkBorr = activeCardDiv.querySelector(`#chk-borr${activeBook.getId()}`);
+    chkBorr.addEventListener('change', (e) => {
+        activeBook.setIsBorrowed(e.target.checked);
+        if (selectFilter.value === 'borrowedSelect') {
             filter.dispatchEvent(new Event('input'));
         }
     });
@@ -148,6 +187,16 @@ filter.addEventListener('input', () => {
             return esFavorito;
         }
 
+        if (criterio === 'borrowedSelect') {
+            const esBorrowed = book.getIsBorrowed();
+            if (query !== '') {
+                const coincideTexto = book.getTitle().toLowerCase().includes(query) || 
+                                     book.getAuthor().toLowerCase().includes(query);
+                return esBorrowed && coincideTexto;
+            }
+            return esBorrowed;
+        }
+
         let valorCampo = '';
         if (criterio === 'titleSelect') valorCampo = book.getTitle();
         else if (criterio === 'authorSelect') valorCampo = book.getAuthor();
@@ -158,8 +207,11 @@ filter.addEventListener('input', () => {
     });
 
     crearCards(bookListFiltered);
+    shownBookCount.textContent = bookListFiltered.length;
 });
 
 selectFilter.addEventListener('change', () => {
     filter.dispatchEvent(new Event('input'));
 });
+
+dashboardCount.textContent = bookList.length;
