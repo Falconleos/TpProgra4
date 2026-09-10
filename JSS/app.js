@@ -1,5 +1,29 @@
 import { Book } from "../Model/Book.js";
-import { bookList } from "./data.js";
+
+let bookList = [];
+let datosGuardados = localStorage.getItem("bookList");
+
+const actualizarAlmacenamiento = () => {
+    localStorage.setItem("bookList", JSON.stringify(bookList));
+};
+
+if(datosGuardados === null){
+    bookList = [
+        new Book("Martin Fierro", "José Hernandez", "novela", 1885),
+        new Book("El Señor de los Anillos", "Tolkien", "fábula", 1963),
+        new Book("Diary of a young girl", "Anne Frank", "bibliography", 1943)
+    ];
+    actualizarAlmacenamiento();
+}else{
+    let librosPlanos = JSON.parse(datosGuardados);
+
+    for (let i = 0; i < librosPlanos.length; i++) {
+        let b = librosPlanos[i];
+        let libroCreado = new Book(b.title, b.author, b.genre, b.year, b.id, b.isFavorite, b.isBorrowed);
+        bookList.push(libroCreado);
+    }
+}
+
 
 const mainObject = document.querySelector('main');
 const editModal = document.querySelector('.modal');
@@ -37,6 +61,7 @@ export const crearCards = (lista = bookList) => {
                 <p>genre: ${book.getGenre()}</p>
                 <p>year: ${book.getYear()}</p>
 
+                <div>
                 <label class="fav-label">
                 <!-- ternario para indicar si la card debe aparecer marcada o no como favorita -->
                     <input type="checkbox" id="chk-fav${book.getId()}" ${book.getIsFavorite() ? 'checked' : ''}>
@@ -47,7 +72,7 @@ export const crearCards = (lista = bookList) => {
                 <label class="fav-label">            
                     <input type="checkbox" id="chk-borr${book.getId()}" ${book.getIsBorrowed() ? 'checked' : ''}>
                     Prestado
-                </label>
+                </label></div>
 
             </div>
             <div class="btn-options">
@@ -59,6 +84,7 @@ export const crearCards = (lista = bookList) => {
         const chkFav = nuevoDiv.querySelector(`#chk-fav${book.getId()}`);
         chkFav.addEventListener('change', (e) => {
             book.setIsFavorite(e.target.checked);
+            actualizarAlmacenamiento(); // <--- GUARDAR CAMBIO
 
             if (selectFilter.value === 'favoriteSelect') {
                 filter.dispatchEvent(new Event('input'));
@@ -68,6 +94,7 @@ export const crearCards = (lista = bookList) => {
         const chkBorr = nuevoDiv.querySelector(`#chk-borr${book.getId()}`);
         chkBorr.addEventListener('change', (e) => {
             book.setIsBorrowed(e.target.checked);
+            actualizarAlmacenamiento(); // <--- GUARDAR CAMBIO
 
             if (selectFilter.value === 'borrowedSelect') {
                 filter.dispatchEvent(new Event('input'));
@@ -93,6 +120,7 @@ export const crearCards = (lista = bookList) => {
                 const index = bookList.findIndex(b => b.getId() === book.getId());
                 if (index !== -1) {
                     bookList.splice(index, 1);
+                    actualizarAlmacenamiento(); // <--- GUARDAR CAMBIO
                 }
                 nuevoDiv.remove();
             }
@@ -123,6 +151,8 @@ btnConfirmar.addEventListener('click', () => {
     activeBook.setAuthor(author);
     activeBook.setGenre(genre);
     activeBook.setYear(Number(year));
+    
+    actualizarAlmacenamiento(); 
 
     activeCardDiv.querySelector('.card-info').innerHTML = `
         <h2>${activeBook.getTitle()}</h2>
@@ -130,6 +160,7 @@ btnConfirmar.addEventListener('click', () => {
         <p>genre: ${activeBook.getGenre()}</p>
         <p>year: ${activeBook.getYear()}</p>
 
+        
         <label class="fav-label">
             <input type="checkbox" id="chk-fav${activeBook.getId()}" ${activeBook.getIsFavorite() ? 'checked' : ''}>
             Favorito
@@ -139,11 +170,13 @@ btnConfirmar.addEventListener('click', () => {
             <input type="checkbox" id="chk-borr${activeBook.getId()}" ${activeBook.getIsBorrowed() ? 'checked' : ''}>
             Prestado
         </label>
+    
     `;
 
     const chkFav = activeCardDiv.querySelector(`#chk-fav${activeBook.getId()}`);
     chkFav.addEventListener('change', (e) => {
         activeBook.setIsFavorite(e.target.checked);
+        actualizarAlmacenamiento();
         if (selectFilter.value === 'favoriteSelect') {
             filter.dispatchEvent(new Event('input'));
         }
@@ -152,6 +185,7 @@ btnConfirmar.addEventListener('click', () => {
     const chkBorr = activeCardDiv.querySelector(`#chk-borr${activeBook.getId()}`);
     chkBorr.addEventListener('change', (e) => {
         activeBook.setIsBorrowed(e.target.checked);
+        actualizarAlmacenamiento();
         if (selectFilter.value === 'borrowedSelect') {
             filter.dispatchEvent(new Event('input'));
         }
@@ -183,6 +217,8 @@ addForm.addEventListener('submit', (e) => {
     );
 
     bookList.push(newBook);
+    actualizarAlmacenamiento(); // <--- GUARDAR CAMBIO
+    
     addForm.reset();
     
     filter.dispatchEvent(new Event('input'));
@@ -198,7 +234,7 @@ filter.addEventListener('input', () => {
             const esFavorito = book.getIsFavorite();
             if (query !== '') {
                 const coincideTexto = book.getTitle().toLowerCase().includes(query) || 
-                                     book.getAuthor().toLowerCase().includes(query);
+                                   book.getAuthor().toLowerCase().includes(query);
                 return esFavorito && coincideTexto;
             }
             return esFavorito;
@@ -208,7 +244,7 @@ filter.addEventListener('input', () => {
             const esBorrowed = book.getIsBorrowed();
             if (query !== '') {
                 const coincideTexto = book.getTitle().toLowerCase().includes(query) || 
-                                     book.getAuthor().toLowerCase().includes(query);
+                                   book.getAuthor().toLowerCase().includes(query);
                 return esBorrowed && coincideTexto;
             }
             return esBorrowed;
